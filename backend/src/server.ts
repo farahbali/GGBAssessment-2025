@@ -2,15 +2,16 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import { closeDB, connectDB } from './config/database';
+import { setupSwagger } from './config/swagger';
 
-
-
+import { errorHandler, notFoundHandler } from './middleware/errorHandler';
+import { logger, requestLogger } from './middleware/logger';
+import { performanceMiddleware } from './middleware/performance';
+import { corsOptions, helmetConfig } from './middleware/security';
+import feedbackRoutes from './routes/feedback';
 import { ServerConfig } from './types';
-import { logger } from './middleware/logger';
 
-// Load environment variables
 dotenv.config();
-// Server configuration
 const serverConfig: ServerConfig = {
   port: parseInt(process.env.PORT || '5000', 10),
   nodeEnv: (process.env.NODE_ENV as any) || 'development',
@@ -33,6 +34,17 @@ const serverConfig: ServerConfig = {
 const app = express();
 
 
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+app.set('trust proxy', 1);
+
+app.use(performanceMiddleware);
+
+app.use(helmetConfig);
+
+app.use(performanceMiddleware);
+
+app.use(requestLogger);
 app.use(
   express.json({
     limit: process.env.REQUEST_SIZE_LIMIT || '10mb',
@@ -48,9 +60,10 @@ app.use(
   })
 );
 
+app.use('/api/feedback', feedbackRoutes);
 
 
-
+setupSwagger(app);
 
 
 
@@ -71,10 +84,47 @@ app.get('/', (req, res) => {
 });
 
 
+app.use(notFoundHandler);
+
+app.use(errorHandler);
 
 
+const gracefulShutdown = async (signal: string) => {
+  logger.info(`Received ${signal}. Starting graceful shutdown...`);
 
+  try {
+    await closeDB();
 
+    server.close(() => {
+      logger.info('Server closed successfully');
+      process.exit(0);
+    });
+
+    setTimeout(() => {
+      logger.error('Forced shutdown after timeout');
+      process.exit(1);
+    }, 10000);
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    logger.error('Error during graceful shutdown', { error: errorMessage });
+    process.exit(1);
+  }
+};
+
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+
+process.on('uncaughtException', (err: unknown) => {
+  const errorMessage = err instanceof Error ? err.message : String(err);
+  const stack = err instanceof Error ? err.stack : undefined;
+  logger.error('Uncaught Exception', { error: errorMessage, stack });
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  logger.error('Unhandled Rejection', { reason, promise });
+  process.exit(1);
+});
 
 let server: ReturnType<typeof app.listen>;
 
@@ -91,6 +141,12 @@ const startServer = async () => {
       });
 
       console.log(`🚀 Server running on port ${serverConfig.port}`);
+      console.log(
+        `📚 API Documentation: http://localhost:${serverConfig.port}/api-docs`
+      );
+      console.log(
+        `🏥 Health Check: http://localhost:${serverConfig.port}/api/feedback/health`
+      );
     });
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : String(err);
