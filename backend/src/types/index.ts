@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Document } from 'mongoose';
 
-// Core domain types
+
 export interface IFeedback {
   _id: string;           
   title: string;
@@ -10,7 +10,7 @@ export interface IFeedback {
   createdAt: Date;
   updatedAt: Date;
 }
-// --- Mongoose document
+
 export interface IFeedbackDocument extends Document {
   title: string;
   description: string;
@@ -38,7 +38,7 @@ export interface FeedbackQuery {
   search?: string;
 }
 
-// API Response types
+
 export interface ApiResponse<T = any> {
   success: boolean;
   data?: T;
@@ -56,7 +56,6 @@ export interface PaginationInfo {
   hasPrev: boolean;
 }
 
-// Express types
 export interface AuthenticatedRequest extends Request {
   user?: any;
 }
