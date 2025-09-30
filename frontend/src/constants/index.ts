@@ -2,13 +2,14 @@
 export const API_CONFIG = {
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000',
   ENDPOINTS: {
-    FEEDBACK: '/api/feedback',
-    HEALTH: '/api/health',
-    DOCS: '/api-docs',
+    FEEDBACK: '/feedback',
+    HEALTH: '/health',
+    DOCS: '/docs',
   },
   TIMEOUT: 10000,
   RETRY_ATTEMPTS: 3,
 } as const;
+
 
 
 export const APP_CONFIG = {

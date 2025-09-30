@@ -3,15 +3,15 @@ import { API_CONFIG } from '@/constants';
 import { Feedback, CreateFeedbackRequest, UpdateFeedbackStatusRequest } from '@/types';
 
 export class FeedbackService {
-  private static readonly ENDPOINT = API_CONFIG.ENDPOINTS.FEEDBACK;
+  private static readonly ENDPOINT = "/feedback";
 
   static async getAll(): Promise<Feedback[]> {
-    const response = await apiClient.get<Feedback[]>(this.ENDPOINT);
+    const response = await apiClient.get<Feedback[]>(`${FeedbackService.ENDPOINT}`);
     return response.data || [];
   }
 
   static async getById(id: string): Promise<Feedback> {
-    const response = await apiClient.get<Feedback>(`${this.ENDPOINT}/${id}`);
+    const response = await apiClient.get<Feedback>(`${FeedbackService.ENDPOINT}/${id}`);
     if (!response.data) {
       throw new Error('Feedback not found');
     }
@@ -19,7 +19,7 @@ export class FeedbackService {
   }
 
   static async create(data: CreateFeedbackRequest): Promise<Feedback> {
-    const response = await apiClient.post<Feedback>(this.ENDPOINT, data);
+    const response = await apiClient.post<Feedback>(FeedbackService.ENDPOINT, data);
     if (!response.data) {
       throw new Error('Failed to create feedback');
     }
@@ -32,7 +32,7 @@ export class FeedbackService {
     status: UpdateFeedbackStatusRequest
   ): Promise<Feedback> {
     const response = await apiClient.patch<Feedback>(
-      `${this.ENDPOINT}/${id}`, 
+      `${FeedbackService.ENDPOINT}/${id}`, 
       status
     );
     if (!response.data) {
@@ -42,7 +42,7 @@ export class FeedbackService {
   }
 
   static async delete(id: string): Promise<void> {
-    await apiClient.delete(`${this.ENDPOINT}/${id}`);
+    await apiClient.delete(`${FeedbackService.ENDPOINT}/${id}`);
   }
 
   static async bulkUpdateStatus(
@@ -56,7 +56,7 @@ export class FeedbackService {
 
   static async search(query: string): Promise<Feedback[]> {
     const response = await apiClient.get<Feedback[]>(
-      `${this.ENDPOINT}/search?q=${encodeURIComponent(query)}`
+      `${FeedbackService.ENDPOINT}/search?q=${encodeURIComponent(query)}`
     );
     return response.data || [];
   }

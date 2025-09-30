@@ -1,12 +1,13 @@
 import { API_CONFIG } from '@/constants';
-import { ApiResponse  } from '@/types';
+import { ApiResponse } from '@/types';
 
 class ApiClient {
   private baseURL: string;
   private timeout: number;
 
   constructor() {
-    this.baseURL = API_CONFIG.BASE_URL;
+    // Always point to the /api root
+    this.baseURL = `${API_CONFIG.BASE_URL}/api`;
     this.timeout = API_CONFIG.TIMEOUT;
   }
 
@@ -14,8 +15,8 @@ class ApiClient {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<ApiResponse<T>> {
-    const url = `${this.baseURL}${endpoint}`;
-    
+    const url = `${this.baseURL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+
     const config: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +46,7 @@ class ApiClient {
       return data;
     } catch (error) {
       clearTimeout(timeoutId);
-      
+
       if (error instanceof ApiError) {
         throw error;
       }
@@ -83,7 +84,6 @@ class ApiClient {
     return this.request<T>(endpoint, { method: 'DELETE' });
   }
 
-
   async healthCheck(): Promise<boolean> {
     try {
       await this.get(API_CONFIG.ENDPOINTS.HEALTH);
@@ -93,7 +93,6 @@ class ApiClient {
     }
   }
 }
-
 
 class ApiError extends Error {
   public status?: number;
@@ -106,5 +105,6 @@ class ApiError extends Error {
     this.code = code;
   }
 }
+
 export const apiClient = new ApiClient();
 export { ApiError };

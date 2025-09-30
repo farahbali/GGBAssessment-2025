@@ -15,7 +15,7 @@ const FeedbackList: React.FC = memo(() => {
   const [sortBy, setSortBy] = useState<SortOption>('newest');
   const [viewMode, setViewMode] = useState<ViewMode>('all');
   const [updatingIds, setUpdatingIds] = useState<Set<string>>(new Set());
-
+console.log('feedbacks', feedbacks)
   // Sort and filter feedbacks
   const sortedFeedbacks = useMemo(() => {
     return sortFeedbacks(feedbacks, sortBy);
