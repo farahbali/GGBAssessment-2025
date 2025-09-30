@@ -22,7 +22,7 @@ export const feedbackSwaggerDocs = `
  *         name: status
  *         schema:
  *           type: string
- *           enum: [pending, in_progress, completed]
+ *           enum: [open, in-progress, done]
  *         description: Filter feedbacks by status
  *       - in: query
  *         name: page
@@ -161,7 +161,7 @@ export const feedbackSwaggerDocs = `
  *                   type: string
  *                 status:
  *                   type: string
- *                   enum: [pending, in_progress, completed]
+ *                   enum: [open, in-progress, done]
  *     responses:
  *       200:
  *         description: Bulk update completed
@@ -182,7 +182,7 @@ export const feedbackSwaggerDocs = `
  *           type: string
  *         status:
  *           type: string
- *           enum: [pending, in_progress, completed]
+ *           enum: [open, in-progress, done]
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -206,6 +206,6 @@ export const feedbackSwaggerDocs = `
  *       properties:
  *         status:
  *           type: string
- *           enum: [pending, in_progress, completed]
+ *           enum: [open, in-progress, done]
  */
 `;
