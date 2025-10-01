@@ -8,14 +8,14 @@
 
 ### 1) Clone and install dependencies
 ```bash
-git clone 
+git clone https://github.com/farahbali/GGBAssessment-2025.git
 cd GGBAssessment-2025
 cd backend && npm install
 cd ../frontend && npm install
 ```
 
 ### 2) Environment variables
-Create a `.env` file at the project root based on `.env.example`.
+Create a `.env` file at the project root (frontend root / backend root ) based on `.env.example`.
 
 ```bash
 cp .env.example .env
@@ -24,7 +24,7 @@ cp .env.example .env
 Update values as needed. The backend reads variables from the process environment; running each app with `cross-env` or separate `.env` files is fine, but for simplicity this project expects values to be available to both processes via the root `.env`.
 
 Required (backend):
-- `MONGODB_URI` (e.g. mongodb://localhost:27017/feedback_board)
+- `MONGODB_URI` (e.g. mongodb+srv://farahbali:FARAh.260@cluster0.bvk73ov.mongodb.net/feedback-board?retryWrites=true&w=majority&appName=Cluster0)
 - `PORT` (default 5000)
 
 Optional (backend):
