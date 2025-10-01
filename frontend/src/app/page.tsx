@@ -6,12 +6,12 @@ import FeedbackForm from '@/components/forms/FeedbackForm';
 import FeedbackList from '@/components/FeedbackList';
 import { LoadingSpinner } from '@/components/ui';
 
+
 export default function Home() {
   const { loadFeedbacks, loading } = useFeedback();
 
   useEffect(() => {
     loadFeedbacks();
-    console.log('helloooooooooooooo')
   }, [loadFeedbacks]);
 
   if (loading) {
