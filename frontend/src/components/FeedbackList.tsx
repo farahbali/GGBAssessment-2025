@@ -110,7 +110,7 @@ const FeedbackList: React.FC = memo(() => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="text-sm border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="text-sm border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
             >
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
@@ -123,7 +123,7 @@ const FeedbackList: React.FC = memo(() => {
             <select
               value={viewMode}
               onChange={(e) => setViewMode(e.target.value as ViewMode)}
-              className="text-sm border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="text-sm border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
             >
               <option value="all">All</option>
               <option value="grouped">Grouped</option>
