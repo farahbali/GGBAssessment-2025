@@ -15,18 +15,17 @@ const FeedbackList: React.FC = memo(() => {
   const [sortBy, setSortBy] = useState<SortOption>('newest');
   const [viewMode, setViewMode] = useState<ViewMode>('all');
   const [updatingIds, setUpdatingIds] = useState<Set<string>>(new Set());
-console.log('feedbacks', feedbacks)
-  // Sort and filter feedbacks
+
   const sortedFeedbacks = useMemo(() => {
     return sortFeedbacks(feedbacks, sortBy);
   }, [feedbacks, sortBy]);
 
-  // Group feedbacks by status
+ 
   const groupedFeedbacks = useMemo(() => {
     return groupFeedbacksByStatus(sortedFeedbacks);
   }, [sortedFeedbacks]);
 
-  // Handle status change with loading state
+  
   const handleStatusChange = async (id: string, status: FeedbackStatus) => {
     setUpdatingIds(prev => new Set(prev).add(id));
     try {
@@ -43,7 +42,6 @@ console.log('feedbacks', feedbacks)
     }
   };
 
-  // Handle delete with loading state
   const handleDelete = async (id: string) => {
     setUpdatingIds(prev => new Set(prev).add(id));
     try {
@@ -101,14 +99,12 @@ console.log('feedbacks', feedbacks)
 
   return (
     <div className="space-y-6">
-      {/* Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
         <h2 className="text-lg font-medium text-gray-900">
           Feedback ({feedbacks.length})
         </h2>
         
         <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-          {/* Sort options */}
           <div className="flex space-x-2">
             <label className="text-sm font-medium text-gray-700">Sort:</label>
             <select
@@ -122,7 +118,6 @@ console.log('feedbacks', feedbacks)
             </select>
           </div>
           
-          {/* View mode */}
           <div className="flex space-x-2">
             <label className="text-sm font-medium text-gray-700">View:</label>
             <select
@@ -137,7 +132,6 @@ console.log('feedbacks', feedbacks)
         </div>
       </div>
 
-      {/* Feedback list */}
       {viewMode === 'all' ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {sortedFeedbacks.map((feedback) => (
