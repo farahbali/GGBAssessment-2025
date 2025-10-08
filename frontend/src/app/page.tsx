@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import { useFeedback } from '@/hooks';
-import FeedbackForm from '@/components/forms/FeedbackForm';
 import FeedbackList from '@/components/FeedbackList';
 import { LoadingSpinner } from '@/components/ui';
 
