@@ -33,7 +33,7 @@ export default function Home() {
         </div>
         
         <div className="space-y-8">
-          <FeedbackForm />
+          {/* <FeedbackForm /> */}
           <FeedbackList />
         </div>
       </div>
