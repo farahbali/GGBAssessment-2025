@@ -41,7 +41,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         className={cn(
           baseClasses,
-          variantClasses[variant],
+          // variantClasses[variant],
           sizeClasses[size],
           className
         )}
