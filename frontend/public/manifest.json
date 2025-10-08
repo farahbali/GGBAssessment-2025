@@ -1,0 +1,25 @@
+{
+  "name": "Kwizmo",
+  "short_name": "Kwiso",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icons/KzLogo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/KzLogo.svg",
+      "sizes": "512x512",
+      "type": "image/svg"
+    },
+      {
+      "src": "/icons/KzLogo.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+}
